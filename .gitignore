@@ -1,0 +1,10 @@
+/_build/
+/deps/
+*.beam
+*.ez
+.elixir_ls/
+.DS_Store
+
+# Historical docs with proprietary examples (keep local, don't commit)
+/docs/systems/
+/plans/previous/

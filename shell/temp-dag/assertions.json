@@ -1,0 +1,195 @@
+[
+  {
+    "id": "bs001",
+    "type": "assertion",
+    "kind": "primitive",
+    "claim": "Interacting with the assertion DAG currently requires either reading raw JSON or hoping an agent's context window arranges relevant assertions adjacently - there is no deterministic command interface for traversal, composition, or querying",
+    "source": "user:collaborator:2026-03-14",
+    "evidence": [
+      {
+        "date": "2026-03-14",
+        "detail": "Observation emerged from conversation about Unix internals. Multiple prior sessions had access to both 'vehicle parked April 6-15' and 'show April 12 in Orlando' and none surfaced the conflict. The context window never arranged them adjacently. The DAG had no shell-like interface to make composition structural.",
+        "source": "user:collaborator:2026-03-14"
+      }
+    ],
+    "confidence": 0.95,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs002",
+    "type": "assertion",
+    "kind": "primitive",
+    "claim": "Unix achieved composability by representing devices, sockets, pipes, and files as a single abstraction ('everything is a file') with a uniform interface (open, read, write, close), enabling tools to compose without knowing what they're operating on",
+    "source": "policy",
+    "evidence": [
+      {
+        "date": "2026-03-14",
+        "detail": "Established computer science history. The 'everything is a file' abstraction is a foundational Unix design principle documented since the 1970s Bell Labs work by Thompson and Ritchie.",
+        "source": "policy"
+      }
+    ],
+    "confidence": 1.0,
+    "subjects": [],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs003",
+    "type": "assertion",
+    "kind": "primitive",
+    "claim": "The Unix shell enabled emergent pipelines (e.g. find | xargs grep | sort | uniq -c) that were not designed by the tool authors - composability produced capabilities that no individual tool contained",
+    "source": "policy",
+    "evidence": [
+      {
+        "date": "2026-03-14",
+        "detail": "Established computer science history. Shell pipelines are the canonical example of emergent composability - small tools connected through a universal text interface producing capabilities none of the tools were designed to provide individually.",
+        "source": "policy"
+      }
+    ],
+    "confidence": 1.0,
+    "subjects": [],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs004",
+    "type": "assertion",
+    "kind": "primitive",
+    "claim": "When two Unix commands are piped together, the composition is deterministic - text flows through. When two assertions are composed, the resulting compound's claim requires reasoning about what the combination means. The composition operation itself is probabilistic, not mechanical.",
+    "source": "user:collaborator:2026-03-14",
+    "evidence": [
+      {
+        "date": "2026-03-14",
+        "detail": "Identified during conversation extending the Unix/DAG analogy. This is where the analogy breaks and potentially where the real insight lives. Unix pipes are mechanical (bytes flow through). Belief composition requires judgment about what the combination of claims means.",
+        "source": "user:collaborator:2026-03-14"
+      }
+    ],
+    "confidence": 0.9,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs005",
+    "type": "assertion",
+    "kind": "compound",
+    "claim": "The relationship between the assertion DAG and its users (human or agent) mirrors the relationship between the Unix kernel and its users - the DAG holds structured state and needs a shell as a deterministic interface layer",
+    "deps": ["bs001", "bs002"],
+    "implication": "The DAG is the kernel - it manages structured belief state (assertions, dependencies, confidence, staleness). What's missing is the shell - a deterministic interface that makes traversal, composition, and querying reliable rather than stochastic. This is an analogy, not a proof, but it's structurally sound enough to drive design.",
+    "confidence": 0.7,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs006",
+    "type": "assertion",
+    "kind": "compound",
+    "claim": "Six core Unix abstractions have structural counterparts in the assertion DAG: everything-is-a-file maps to everything-is-an-assertion, small-tools to atomic-claims, pipes to dependency-chains, text-interface to schema-interface, permissions to confidence-scores, process-isolation to session-isolation",
+    "deps": ["bs001", "bs002", "bs003"],
+    "implication": "The mapping is illuminating but not all pairs carry equal weight. Pipes-to-deps is strong (output of one becomes input of another). Permissions-to-confidence is suggestive but looser. The value is in the structural parallel generating design insight, not in forcing exact correspondence.",
+    "confidence": 0.65,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs007",
+    "type": "assertion",
+    "kind": "compound",
+    "claim": "Unlike Unix where both the kernel and the shell are deterministic, a belief system has a split character: the graph structure is deterministic but the composition semantics require probabilistic reasoning - the LLM is not just the user of the shell, it is part of the kernel",
+    "deps": ["bs004", "bs005"],
+    "implication": "This reframes the LLM's role from 'user of the belief system' to 'component of the belief system.' The graph operations (traversal, staleness, dependency walking) are deterministic. The composition operation (what does combining these assertions mean?) is probabilistic. The belief kernel has a fundamentally different character than the Unix kernel. The deterministic/probabilistic boundary is the central design challenge.",
+    "confidence": 0.75,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs008",
+    "type": "assertion",
+    "kind": "implication",
+    "claim": "Composable Beliefs should include a shell layer - a set of deterministic commands (query, compose, why, stale, confidence, implications) that provide reliable traversal and composition of the graph, replacing stochastic context-window-dependent reasoning with structural operations",
+    "deps": ["bs005", "bs001"],
+    "implication": "The belief shell API (v1 implemented as mix bs) provides the deterministic Tier 1 operations: list, show, tree, deps, dependents, stale, path, history, subjects, stats. These are the 'syscalls' of the belief system. The design is proven by implementation - the v1 shell works on the live DAG.",
+    "confidence": 0.7,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "materialized": {
+      "date": "2026-03-14",
+      "todos": [
+        {
+          "object": "belief-shell-api-v1",
+          "action": "Implemented as mix bs with 10 deterministic operations"
+        }
+      ]
+    },
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs009",
+    "type": "assertion",
+    "kind": "implication",
+    "claim": "The belief shell cannot be purely deterministic - because belief composition requires judgment, the shell must define where the deterministic/probabilistic boundary falls and design Tier 2 operations that explicitly cross it with propose-confirm patterns",
+    "deps": ["bs007", "bs008", "bs004"],
+    "implication": "Some operations (traversal, staleness detection, dependency walking) are fully deterministic [D]. But compose - the most important operation - must invoke reasoning [P]. The shell must tag every command with its tier (D/P/H) so the caller always knows which side of the boundary they're on. Tier 2 operations (compose, assert, materialize, challenge, relate) follow a propose-confirm pattern: the shell presents what it would do, the caller approves, then the write happens.",
+    "confidence": 0.7,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  },
+  {
+    "id": "bs010",
+    "type": "assertion",
+    "kind": "implication",
+    "claim": "If Unix's generativity is a target property for the belief shell, the design should explicitly optimize for emergent composition - small orthogonal operations, a universal interchange format, and no operation that assumes it knows the full pipeline it's part of",
+    "deps": ["bs003", "bs005", "bs008"],
+    "implication": "Agents composing beliefs in unanticipated ways is the measure of success. The shell should output assertion IDs when piped (like Unix tools detect TTY), support chaining (stale | challenge, dependents | conflicts), and keep operations orthogonal so they combine freely. This is an aspiration, not proven - lower confidence reflects that achieving emergent composability is a design goal that may or may not be realizable.",
+    "confidence": 0.65,
+    "subjects": [
+      {
+        "ref": "assertions/composable-beliefs",
+        "type": "assertions"
+      }
+    ],
+    "status": "active",
+    "created": "2026-03-14"
+  }
+]
