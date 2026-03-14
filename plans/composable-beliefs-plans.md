@@ -54,7 +54,7 @@ This plan should read as a position paper, not a product spec. The voice should 
 - `ops/plans/NEXT-stratta-agent-belief-infrastructure.md` - API design, SDK examples, build sequence, service architecture (ignore product/commercial framing, extract technical substance)
 - `ops/plans/NEXT-stratta-beam-agent-runtime.md` - BEAM advantages for agent systems, supervision model, message passing, reference architectures
 - `ops/systems/assertion-dag.md` - schema and query patterns
-- `lib/tourlab/assertion.ex` - current Elixir implementation (the extraction source)
+- `the reference implementation` - reference Elixir implementation
 - `mix.exs` - current project structure
 
 ### Key arguments to incorporate
@@ -67,7 +67,7 @@ This plan should read as a position paper, not a product spec. The voice should 
 
 **Integration model.** Draw from the Heap analogy: integrate the SDK, it captures belief formation at the workflow level. Day one: explicit assertion (`cb.assert()`). Future: autocapture hooks for common patterns (tool call results as suggested primitives).
 
-**Build sequence.** Extract from this repo first. The current `lib/tourlab/assertion.ex` is the starting point. Tourlab becomes the first client. Everything else builds on the extraction working cleanly.
+**Build sequence.** Extract from this repo first. The current `the reference implementation` is the starting point. The reference implementation is the starting point. Everything else builds on the extraction working cleanly.
 
 ### What to exclude
 

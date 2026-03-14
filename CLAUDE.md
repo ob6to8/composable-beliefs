@@ -53,7 +53,7 @@ The CLI interface to the DAG. See `shell/belief-shell-api-v1.md` for the full sp
 
 ## Data
 
-- `org/assertions/assertions.json` - the assertion graph (seed data from Tourlab)
+- `org/assertions/assertions.json` - the assertion graph (example assertions demonstrating the paradigm)
 - `shell/temp-dag/assertions.json` - belief shell analysis assertions
 
 ## Plans
@@ -61,6 +61,9 @@ The CLI interface to the DAG. See `shell/belief-shell-api-v1.md` for the full sp
 - `plans/composable-beliefs-thesis.md` - the paradigm definition
 - `plans/composable-beliefs-plans.md` - plan briefs for DAG spec, architecture, privacy, distribution
 - `plans/belief-shell-tier2.md` - implementation plan for probabilistic shell operations
+- `plans/cb-on-the-beam.md` - why the BEAM is the right runtime, supervision + beliefs coupling, client integration path example
+- `plans/cb-service-model.md` - open source core + paid service model, structure-without-content privacy, tiers, client integration, tiers
+- `plans/historical/` - (gitignored) original Stratta plans from startup-framing era, mined for useful content
 
 ## Formatting
 

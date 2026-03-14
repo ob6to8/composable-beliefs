@@ -15,7 +15,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -38,7 +38,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -55,7 +55,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -78,7 +78,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -101,7 +101,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -117,7 +117,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -138,7 +138,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -159,14 +159,14 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
     "deps": [
       "a050"
     ],
-    "implication": "The Rich Hartranft incident showed that the agent will silently omit fields when presenting person records from grep output. The fix is not behavioral ('remember to list everything') but structural: build mix tourlab.person to format complete records deterministically. This applies to any data retrieval where completeness matters more than summarization.",
+    "implication": "Operational experience showed that the agent will silently omit fields when presenting person records from grep output. The fix is not behavioral ('remember to list everything') but structural: build a deterministic formatter to format complete records deterministically. This applies to any data retrieval where completeness matters more than summarization.",
     "materialized": null,
     "status": "active",
     "created": "2026-03-12"
@@ -187,7 +187,7 @@
     "confidence": 0.8,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -202,7 +202,7 @@
     "confidence": 0.7,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -221,7 +221,7 @@
     "confidence": 0.7,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -244,7 +244,7 @@
     "confidence": 0.8,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -263,7 +263,7 @@
     "confidence": 0.7,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -283,7 +283,7 @@
     "confidence": 0.6,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -315,7 +315,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -339,7 +339,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -363,7 +363,7 @@
     "confidence": 0.8,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -378,7 +378,7 @@
     "confidence": 0.8,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -409,7 +409,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -433,7 +433,7 @@
     "confidence": 0.4,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -448,7 +448,7 @@
     "confidence": 0.9,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -477,7 +477,7 @@
     "confidence": 0.85,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
@@ -520,7 +520,7 @@
     "confidence": null,
     "subjects": [
       {
-        "ref": "agent/claude-tourlab",
+        "ref": "agent/claude",
         "type": "agent"
       }
     ],
