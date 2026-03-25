@@ -1,0 +1,1 @@
+There are exactly two control models for agent systems. Script-driven: the human writes the workflow, the LLM provides judgment at specific points. LLM-driven: the LLM writes the workflow at runtime by requesting tools. Both are built from the same primitives. The choice between them is policy, not architecture.

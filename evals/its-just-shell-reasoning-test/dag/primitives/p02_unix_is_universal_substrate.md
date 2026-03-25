@@ -1,0 +1,1 @@
+Unix is the most universal expression of processes, files, sockets, and syscalls that developers actually touch. Agent frameworks abstract over Unix, yet debugging falls back to the Unix layer. The distance between abstraction and implementation is already minimal.

@@ -1,0 +1,125 @@
+
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+failures=0
+
+get_config() {
+  local file="$1" key="$2"
+  grep "^${key}=" "$file" | cut -d'=' -f2-
+}
+
+assert_eq() {
+  local description="$1" expected="$2" actual="$3"
+  if [[ "$expected" == "$actual" ]]; then
+    printf "PASS: %s\n" "$description"
+  else
+    printf "FAIL: %s\n  expected: '%s'\n  actual:   '%s'\n" "$description" "$expected" "$actual"
+    ((failures++))
+  fi
+}
+
+TMPDIR_TEST="$(mktemp -d)"
+trap 'rm -rf "$TMPDIR_TEST"' EXIT
+
+# --- Test: basic key-value retrieval ---
+cfg="$TMPDIR_TEST/basic.cfg"
+printf "name=alice\nage=30\ncity=berlin\n" > "$cfg"
+
+result="$(get_config "$cfg" "name")"
+assert_eq "basic key retrieval (name)" "alice" "$result"
+
+result="$(get_config "$cfg" "age")"
+assert_eq "basic key retrieval (age)" "30" "$result"
+
+result="$(get_config "$cfg" "city")"
+assert_eq "basic key retrieval (city)" "berlin" "$result"
+
+# --- Test: missing key returns empty string ---
+result="$(get_config "$cfg" "missing")"
+assert_eq "missing key returns empty" "" "$result"
+
+# --- Test: value containing equals sign ---
+cfg2="$TMPDIR_TEST/equals.cfg"
+printf "conn=host=localhost=foo\nother=val\n" > "$cfg2"
+
+result="$(get_config "$cfg2" "conn")"
+assert_eq "value containing equals signs" "host=localhost=foo" "$result"
+
+# --- Test: empty value ---
+cfg3="$TMPDIR_TEST/empty_val.cfg"
+printf "empty=\nfilled=yes\n" > "$cfg3"
+
+result="$(get_config "$cfg3" "empty")"
+assert_eq "empty value" "" "$result"
+
+# --- Test: key that is a substring of another key ---
+cfg4="$TMPDIR_TEST/substring.cfg"
+printf "port=8080\nport_name=http\nreport=daily\n" > "$cfg4"
+
+result="$(get_config "$cfg4" "port")"
+assert_eq "exact key match, not substring (port)" "8080" "$result"
+
+# --- Test: value with spaces ---
+cfg5="$TMPDIR_TEST/spaces.cfg"
+printf "greeting=hello world\npath=/usr/local/bin\n" > "$cfg5"
+
+result="$(get_config "$cfg5" "greeting")"
+assert_eq "value with spaces" "hello world" "$result"
+
+# --- Test: last value wins when duplicate keys exist ---
+cfg6="$TMPDIR_TEST/dupes.cfg"
+printf "key=first\nkey=second\n" > "$cfg6"
+
+result="$(get_config "$cfg6" "key")"
+expected="$(printf "first\nsecond")"
+assert_eq "duplicate keys returns all matches" "$expected" "$result"
+
+# --- Test: single entry file ---
+cfg7="$TMPDIR_TEST/single.cfg"
+printf "only=one\n" > "$cfg7"
+
+result="$(get_config "$cfg7" "only")"
+assert_eq "single entry file" "one" "$result"
+
+# --- Test: empty file ---
+cfg8="$TMPDIR_TEST/empty.cfg"
+: > "$cfg8"
+
+result="$(get_config "$cfg8" "anything")"
+assert_eq "empty file returns empty" "" "$result"
+
+# --- Test: value with special characters ---
+cfg9="$TMPDIR_TEST/special.cfg"
+printf "url=https://example.com/path?q=1&r=2\nregex=[a-z]+.*\n" > "$cfg9"
+
+result="$(get_config "$cfg9" "url")"
+assert_eq "value with URL special chars" "https://example.com/path?q=1&r=2" "$result"
+
+# --- Test: key not at start of line should not match ---
+cfg10="$TMPDIR_TEST/indented.cfg"
+printf "  name=indented\nname=correct\n" > "$cfg10"
+
+result="$(get_config "$cfg10" "name")"
+assert_eq "only matches key at start of line" "correct" "$result"
+
+# --- Test: value with trailing whitespace preserved ---
+cfg11="$TMPDIR_TEST/trailing.cfg"
+printf "item=value   \n" > "$cfg11"
+
+result="$(get_config "$cfg11" "item")"
+assert_eq "trailing whitespace preserved" "value   " "$result"
+
+# --- Summary ---
+printf "\n"
+if [[ "$failures" -eq 0 ]]; then
+  printf "All tests passed.\n"
+  exit 0
+else
+  printf "%d test(s) failed.\n" "$failures"
+  exit 1
+fi
+```

@@ -1,0 +1,1 @@
+An LLM is a pure function: text in, text out. It takes a context window and returns either text or a structured tool request. The harness executes side effects. The LLM never executes anything itself.

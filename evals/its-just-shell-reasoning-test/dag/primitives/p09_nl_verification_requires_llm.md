@@ -1,0 +1,1 @@
+Natural language output cannot be programmatically verified without another LLM — turtles all the way down. Shell output can be grepped, diffed, and hashed. The inspection chain terminates at shell semantics but never terminates at natural language.

@@ -1,0 +1,1 @@
+As AI compresses lower-order work toward zero time, valuable human contribution migrates upward: from doing the task (0th) to automating it (1st) to optimizing the automation (2nd) to meta-optimizing (3rd). Each layer must observe and control the layer below it.

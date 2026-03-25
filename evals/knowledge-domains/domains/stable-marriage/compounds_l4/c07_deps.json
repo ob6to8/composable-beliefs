@@ -1,0 +1,7 @@
+{
+  "id": "c07",
+  "name": "Initiating creates optionality",
+  "deps": ["c05", "c06"],
+  "layer": 4,
+  "note": "Top-level thesis. Depends on both the positive claim (c05) and the bounded version (c06). The article presents c07 as its conclusion but its actual strength is closer to c06 than c05."
+}

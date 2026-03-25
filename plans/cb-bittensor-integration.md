@@ -264,6 +264,22 @@ The earned confidence primitive - beliefs whose confidence scores are measuremen
 
 Every risk is mitigated by the layered independence model. If Bittensor economics fail, the framework still works. If demand for earned confidence doesn't materialize, local DAGs and structural telemetry still have value. If timing is early, the open source core accumulates adoption while the market matures. Nothing is bet on a single layer succeeding.
 
+### The eval parallel
+
+The patch evaluation subnet *is* an eval system. Not metaphorically - structurally. Standard AI evals have the same components: a task, multiple evaluators, aggregation into scores, calibration against real-world quality. The subnet does exactly this, with economic incentives added.
+
+The eval ecosystem has converged on two scaling approaches: model-as-judge (cheap, scalable, biased) and human evaluation (gold standard, doesn't scale). Incentivized evaluation is a third path - economically motivated independent evaluators competing on quality, scored by validators with skin in the game. This inherits calibration benefits of human evaluation with scalability of automated evaluation.
+
+CB's subnet isn't just a feature of composable beliefs. It's **general-purpose eval infrastructure** demonstrated first on patches. The mechanism - incentivized independent evaluation with stake-weighted confidence aggregation - applies to any eval task where ground truth is unavailable, multiple assessments are more trustworthy than one, and the thing being evaluated is a structured argument rather than simple right/wrong.
+
+The positioning implication: framing this as "incentivized eval infrastructure for structured reasoning" rather than "a way to verify agent beliefs" turns it from a niche framework feature into a platform play in one of the hottest areas of AI infrastructure. The eval framing also sidesteps crypto stigma - "decentralized evals" is a concept the AI community can evaluate on technical merit.
+
+### Niche positioning as strategy
+
+Each technology choice (Elixir, Bittensor, agent epistemics) reduces the pool of people who might look, but increases the probability and quality of attention from those who do. The intersection selects for the exact audience that already knows the problems are real and has rejected mainstream solutions. Zero competition exists in this intersection because mainstream incentives push everyone toward larger pools.
+
+The crypto stigma is a non-cost for CB specifically: no investors to impress, no hires to recruit, and the layered independence model means crypto-averse developers can use the entire framework at Layer 0 without encountering it. Meanwhile, the Bittensor community gains a subnet producing epistemic quality rather than content - genuinely novel in that ecosystem. The "cost" is illusory subtraction from a pool that wasn't going to convert; the benefit is real addition to pools with dramatically higher conversion rates.
+
 ## Integrations that don't fit
 
 Documented here to prevent future sessions from re-deriving them:

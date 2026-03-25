@@ -1,0 +1,1 @@
+Exit codes are the unit of verification. Success (0), failure (non-zero). Shell-semantic verification terminates the inspection chain — you trust your understanding of shell semantics, not the agent's narrative.

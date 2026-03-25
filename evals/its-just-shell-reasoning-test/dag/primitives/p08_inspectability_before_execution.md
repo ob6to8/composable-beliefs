@@ -1,0 +1,1 @@
+A workflow that can be inspected before it runs (readable as an artifact) is more trustworthy than one that can only be observed after it runs (reconstructed from logs). Pre-execution inspectability is a stronger guarantee than post-execution observability.

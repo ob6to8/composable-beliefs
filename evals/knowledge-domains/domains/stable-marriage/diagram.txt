@@ -1,0 +1,95 @@
+
+STABLE MARRIAGE PROBLEM — ASSERTION DEPENDENCY GRAPH
+═════════════════════════════════════════════════════
+
+LAYER 4 (Top-level thesis)
+──────────────────────────
+
+  [c07] INITIATING CREATES OPTIONALITY
+  "The structural advantage of agency is real and substantial"
+  │
+  ├── c05  Asking produces better outcomes
+  └── c06  Advantage bounded by friction
+
+
+LAYER 3 (Qualified claims)
+──────────────────────────
+
+  [c05] Asking produces better       [c06] Advantage bounded
+  outcomes than waiting               by friction
+  │                                   │
+  ├── c01  Math advantage             ├── c05  (positive claim)
+  ├── c02  The bridge      ◄─────    └── c04  Real-world friction
+  └── c03  Empirical support    │
+                                │
+                          WEAKEST LINK
+
+
+LAYER 2 (Composed claims)
+─────────────────────────
+
+  [c01] Math advantage        [c02] The bridge           [c03] Empirical support
+  deps: p01,p02,p03,p04      deps: p05,p06,p07          deps: p08,p09
+  contestability: NONE        contestability: HIGH        contestability: MEDIUM
+
+  [c04] Real-world friction
+  deps: p10,p11,p12,p13
+  contestability: LOW
+
+
+LAYER 1 (Primitives)
+────────────────────
+
+  MATH (proven, not contestable):
+  [p01] Gale-Shapley always terminates in stable matching
+  [p02] Result is proposer-optimal (best in ANY stable matching)
+  [p03] Result is simultaneously acceptor-pessimal
+  [p04] No external optimizer can improve any proposer's outcome
+
+  BRIDGE (maps math to reality, highly contestable):
+  [p05] "Proposing" in algorithm maps to "asking" in real life
+  [p06] Real-world preferences can be approximated as rankable
+  [p07] Real-world matching is iterative and sequential
+
+  EMPIRICAL (observable, moderately contestable):
+  [p08] Initiators select from full universe; passive select from who approaches
+  [p09] Cold-asking sometimes produces results that wouldn't otherwise exist
+
+  CAVEATS (the article's own qualifications):
+  [p10] Social sanctions exist for asking above your station
+  [p11] Rejection carries real psychological costs
+  [p12] Commitments are sticky due to transaction costs
+  [p13] Stickiness can improve outcomes beyond theoretical optimum
+
+
+PRIMITIVE REUSE ACROSS L2 COMPOUNDS
+────────────────────────────────────
+         c01  c02  c03  c04
+  p01    ──●──────────────── (1 compound)   math
+  p02    ──●──────────────── (1 compound)   math
+  p03    ──●──────────────── (1 compound)   math
+  p04    ──●──────────────── (1 compound)   math
+  p05    ───────●─────────── (1 compound)   bridge
+  p06    ───────●─────────── (1 compound)   bridge
+  p07    ───────●─────────── (1 compound)   bridge
+  p08    ────────────●────── (1 compound)   empirical
+  p09    ────────────●────── (1 compound)   empirical
+  p10    ─────────────────●─ (1 compound)   caveat
+  p11    ─────────────────●─ (1 compound)   caveat
+  p12    ─────────────────●─ (1 compound)   caveat
+  p13    ─────────────────●─ (1 compound)   caveat
+
+  No primitive reuse across compounds (each belongs to exactly one L2 compound).
+  This is structurally different from the Its Just Shell DAG where p06 appeared in 4 compounds.
+
+  The lack of cross-compound reuse means the four L2 compounds are INDEPENDENT PILLARS.
+  Each can be attacked or defended without affecting the others.
+
+
+TYPE DISTRIBUTION
+─────────────────
+  math:      4 primitives → 1 compound (c01)     uncontestable
+  bridge:    3 primitives → 1 compound (c02)     HIGHEST RISK
+  empirical: 2 primitives → 1 compound (c03)     moderate
+  caveat:    4 primitives → 1 compound (c04)     works AGAINST the thesis
+

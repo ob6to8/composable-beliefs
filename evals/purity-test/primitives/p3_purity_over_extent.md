@@ -1,0 +1,1 @@
+Purity (freedom from IO and environmental dependencies) matters more than extent (how much code is exercised). Optimize for purity first.

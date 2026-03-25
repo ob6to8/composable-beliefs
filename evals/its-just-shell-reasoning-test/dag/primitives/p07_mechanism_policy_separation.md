@@ -1,0 +1,1 @@
+Mechanism and policy must be separated. The LLM's capability is mechanism. System prompts, tool availability, guardrails, and skill scripts are policy. Changing who drives the workflow shouldn't require changing infrastructure.

@@ -1,0 +1,1 @@
+Agent frameworks that abstract away Unix eventually need to rebuild Unix-like primitives within themselves — subprocesses, file coordination, script-controlled sequencing. The abstraction leaks back to the layer it abstracted over. The thesis says: skip the intermediary.

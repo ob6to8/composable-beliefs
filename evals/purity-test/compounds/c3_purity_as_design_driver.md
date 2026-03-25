@@ -1,0 +1,1 @@
+When designing tests, treat purity as the primary design constraint. If a test can be rewritten to remove an environmental dependency without changing what it verifies, rewrite it. Accept the natural extent of what gets exercised — do not mock or stub to reduce extent, only to reduce impurity.

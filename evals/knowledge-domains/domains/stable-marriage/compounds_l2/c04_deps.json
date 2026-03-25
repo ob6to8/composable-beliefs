@@ -1,0 +1,7 @@
+{
+  "id": "c04",
+  "name": "Real-world friction modifies conclusions",
+  "deps": ["p10", "p11", "p12", "p13"],
+  "layer": 2,
+  "note": "The article's own caveats, mostly buried in footnotes. The DAG elevates them to equal structural status with the main claims."
+}

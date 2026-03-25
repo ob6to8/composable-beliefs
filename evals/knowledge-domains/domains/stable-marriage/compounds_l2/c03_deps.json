@@ -1,0 +1,7 @@
+{
+  "id": "c03",
+  "name": "Empirical support for initiative",
+  "deps": ["p08", "p09"],
+  "layer": 2,
+  "note": "Partially independent of the math. p08 stands on its own. p09 is anecdotal (N=1 per example)."
+}

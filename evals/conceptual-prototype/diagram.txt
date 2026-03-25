@@ -1,0 +1,70 @@
+
+EPISTEMIC DEPENDENCY GRAPH — test_1
+════════════════════════════════════
+
+PRIMITIVES (depth 0, confidence: absolute)
+──────────────────────────────────────────
+  [p1] Apples are botanically classified as fruit
+  [p2] Botanical fruit contains seeds
+  [p3] Red is a visible color wavelength
+  [p4] Seeds enable plant reproduction
+  [p5] Colors are perceivable by vision
+  [p6] Apples are often red
+
+
+CLAIM: basic (depth 1)                         CLAIM: recombined (depth 1)
+"Apples contain seeds"                         "Visible fruit contains reproductive structures"
+TYPE: AND                                      TYPE: AND
+  │                                              │
+  ├── p1  Apples are fruit                       ├── p3  Red is a color
+  └── p2  Fruit contains seeds                   ├── p5  Colors are visible
+                                                 ├── p1  Apples are fruit
+                                                 ├── p2  Fruit contains seeds
+                                                 └── p4  Seeds enable reproduction
+
+
+CLAIM: complex (depth 2)
+"Red fruit enables reproduction"
+TYPE: AND
+  │
+  ├── subclaim basic_a ─────────────────┐
+  │   "Apples are red fruit"            │
+  │   TYPE: AND                         │
+  │     │                               │
+  │     ├── p1  Apples are fruit        │
+  │     ├── p3  Red is a color          │
+  │     └── p6  Apples are often red    │
+  │                                     │
+  └── subclaim basic_b ─────────────────┘
+      "Seeds enable reproduction"       │
+      TYPE: AND                         │
+        │                               │
+        ├── p2  Fruit contains seeds    │
+        └── p4  Seeds enable repro.     │
+                                        │
+                                        ▼
+FULL PRIMITIVE CHAIN (complex)
+┌───────────────────────────────────────────────────────────────┐
+│  basic_a: [p1] ── [p3] ── [p6]                               │
+│  basic_b: [p2] ── [p4]                                       │
+│                                                               │
+│  unique primitives: p1, p2, p3, p4, p6  (5 of 6)             │
+│  unused primitive:  p5                                        │
+│  max depth:         2  (complex → subclaim → primitive)       │
+│  confidence:        absolute                                  │
+│  valid:             YES                                       │
+└───────────────────────────────────────────────────────────────┘
+
+
+PRIMITIVE REUSE ACROSS CLAIMS
+─────────────────────────────
+        basic   complex   recombined
+  p1    ──●───────●──────────●──
+  p2    ──●───────●──────────●──
+  p3    ──────────●──────────●──
+  p4    ──────────●──────────●──
+  p5    ─────────────────────●──
+  p6    ──────────●─────────────
+
+  Shared across all 3:  p1, p2
+  Never reused:         p5 (only recombined), p6 (only complex)

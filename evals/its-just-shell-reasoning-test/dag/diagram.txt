@@ -1,0 +1,82 @@
+
+ITS JUST SHELL — ASSERTION DEPENDENCY GRAPH
+════════════════════════════════════════════
+
+LAYER 4 (Top-level thesis)
+──────────────────────────
+
+  [c11] ITS JUST SHELL
+  "The shell is all the tool you need for building simple agents.
+   It is also a methodology for producing reliable knowledge with agents."
+  │
+  ├── c08  Ground floor thesis
+  ├── c09  Control as spectrum
+  └── c10  Composability enables scaling
+
+
+LAYER 3 (Architectural claims)
+──────────────────────────────
+
+  [c08] Ground floor thesis              [c09] Control as spectrum             [c10] Composability enables scaling
+  "Unix is the ground floor,             "Script/LLM-driven are poles          "The derivative stack is climbable
+   and it is sufficient"                  of a spectrum, composable,            only through composable artifacts"
+  │                                       mapped to trust gradient"            │
+  ├── c01  Shell is sufficient            │                                    ├── c06  Derivative stack
+  ├── c07  Frameworks rebuild Unix        ├── c02  Two control models          ├── c01  Shell is sufficient
+  └── c05  Convergent evolution           ├── c03  Trust gradient              └── c02  Two control models
+                                          └── c04  Script-driven security
+
+
+LAYER 2 (Composed claims)
+─────────────────────────
+
+  [c01] Shell is sufficient       [c02] Two control models      [c03] Trust gradient
+  deps: p01,p02,p03,p04,p06      deps: p01,p07,p04             deps: p05,p09,p08
+
+  [c04] Script-driven security   [c05] Convergent evolution     [c06] Derivative stack
+  deps: p10,p01,p07              deps: p12,p02,p06              deps: p13,p08,p06
+
+  [c07] Frameworks rebuild Unix
+  deps: p14,p02,p06
+
+
+LAYER 1 (Primitives)
+────────────────────
+
+  [p01] LLM is a pure function: text in, text out
+  [p02] Unix is the most universal substrate developers touch
+  [p03] Files are the unit of state
+  [p04] Text streams are the unit of communication
+  [p05] Exit codes are the unit of verification
+  [p06] Composition of focused tools beats monolithic frameworks
+  [p07] Mechanism and policy must be separated
+  [p08] Pre-execution inspectability > post-execution observability
+  [p09] NL verification requires another LLM (turtles all the way down)
+  [p10] LLMs trust peer agents (82% inter-agent exploitation)
+  [p11] Single agents outperform multi-agent in most cases
+  [p12] Independent convergence toward Unix (2024-2026)
+  [p13] AI compresses lower-order work upward (derivative stack)
+  [p14] All non-trivial abstractions leak (Spolsky)
+
+
+PRIMITIVE REUSE ACROSS L2 COMPOUNDS
+────────────────────────────────────
+         c01  c02  c03  c04  c05  c06  c07
+  p01    ──●────●─────────●──────────────── (3 compounds)
+  p02    ──●──────────────────●────────●── (3 compounds)
+  p03    ──●─────────────────────────────── (1 compound)
+  p04    ──●────●────────────────────────── (2 compounds)
+  p05    ────────────●───────────────────── (1 compound)
+  p06    ──●──────────────────●────●────●── (4 compounds) ← most reused
+  p07    ─────────●─────────●────────────── (2 compounds)
+  p08    ────────────●──────────────●────── (2 compounds)
+  p09    ────────────●───────────────────── (1 compound)
+  p10    ─────────────────●──────────────── (1 compound)
+  p11    ─────────────────────────────────── (0 compounds) ← UNUSED
+  p12    ────────────────────●───────────── (1 compound)
+  p13    ──────────────────────────●────── (1 compound)
+  p14    ──────────────────────────────●── (1 compound)
+
+  Most reused: p06 (composition beats monoliths) — appears in 4 of 7 compounds
+  Unused:      p11 (single agents outperform multi) — no compound depends on it
+

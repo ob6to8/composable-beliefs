@@ -1,0 +1,7 @@
+{
+  "id": "c01",
+  "name": "Mathematical advantage of initiative",
+  "deps": ["p01", "p02", "p03", "p04"],
+  "layer": 2,
+  "note": "Pure math compound. All deps are proven theorems. This compound is uncontestable within its domain."
+}

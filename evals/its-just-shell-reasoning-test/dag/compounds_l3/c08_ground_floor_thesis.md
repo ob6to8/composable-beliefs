@@ -1,0 +1,1 @@
+Unix is the ground floor of agent architecture, and the ground floor is sufficient. The shell provides the orchestration layer; Unix provides the substrate. Agent frameworks abstract over this layer but leak back to it. The debugging tools are the building tools. Only move beyond bash when you feel the pain of needing to.

@@ -1,0 +1,1 @@
+The shell is sufficient for the core problem of agent coordination — routing text between LLM calls, managing state in files, composing workflows from tools. The only new primitive required is a way to call an LLM from the command line. Everything else is already Unix.

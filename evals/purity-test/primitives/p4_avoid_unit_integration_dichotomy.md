@@ -1,0 +1,1 @@
+Do not classify tests as "unit" or "integration." Instead classify by purity (environmental dependencies) and extent (code exercised).

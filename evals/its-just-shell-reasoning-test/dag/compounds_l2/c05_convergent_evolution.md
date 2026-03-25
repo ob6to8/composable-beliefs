@@ -1,0 +1,1 @@
+The design space for agent architecture has an attractor, and the attractor is Unix. Multiple independent practitioners converged on filesystem + bash + simplicity without coordination. This convergence is evidence that the primitives are sufficient for the domain.

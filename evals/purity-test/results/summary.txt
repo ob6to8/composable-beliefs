@@ -1,0 +1,6 @@
+a/run_1.txt p=6/6 c=2/3
+a/run_2.txt p=2/6 c=0/3
+a/run_3.txt p=2/6 c=0/3
+b/run_1.txt p=6/6 c=3/3
+b/run_2.txt p=6/6 c=3/3
+b/run_3.txt p=5/6 c=3/3

@@ -1,0 +1,41 @@
+
+
+<tool_use>
+{"id":"tooluse_jBaXy5QQRZ6xRw4E8Scy2w","type":"tool_use","name":"Write","input":{"file_path":"test_get_config.sh","content":"#!/usr/bin/env bash\nset -euo pipefail\n\n# Function under test\nget_config() {\n  local file=\"$1\" key=\"$2\"\n  grep \"^${key}=\" \"$file\" | cut -d'=' -f2-\n}\n\nfailures=0\ntests_run=0\n\nassert_eq() {\n  local description=\"$1\" expected=\"$2\" actual=\"$3\"\n  tests_run=$((tests_run + 1))\n  if [[ \"$expected\" == \"$actual\" ]]; then\n    printf 'PASS: %s\\n' \"$description\"\n  else\n    printf 'FAIL: %s\\n  expected: \"%s\"\\n  actual:   \"%s\"\\n' \"$description\" \"$expected\" \"$actual\"\n    failures=$((failures + 1))\n  fi\n}\n\n# Create a temporary directory for config files; clean up on exit\ntmpdir=$(mktemp -d)\ntrap 'rm -rf \"$tmpdir\"' EXIT\n\n# --- Test: simple key-value retrieval ---\ncat > \"$tmpdir/simple.conf\" <<'EOF'\nhost=localhost\nport=8080\nname=myapp\nEOF\n\nresult=$(get_config \"$tmpdir/simple.conf\" \"host\")\nassert_eq \"simple key retrieval (host)\" \"localhost\" \"$result\"\n\nresult=$(get_config \"$tmpdir/simple.conf\" \"port\")\nassert_eq \"simple key retrieval (port)\" \"8080\" \"$result\"\n\nresult=$(get_config \"$tmpdir/simple.conf\" \"name\")\nassert_eq \"simple key retrieval (name)\" \"myapp\" \"$result\"\n\n# --- Test: value containing equals signs ---\ncat > \"$tmpdir/equals.conf\" <<'EOF'\nconnection=host=db.example.com=extra\nEOF\n\nresult=$(get_config \"$tmpdir/equals.conf\" \"connection\")\nassert_eq \"value with equals signs\" \"host=db.example.com=extra\" \"$result\"\n\n# --- Test: missing key returns empty string ---\ncat > \"$tmpdir/missing.conf\" <<'EOF'\nalpha=one\nEOF\n\nresult=$(get_config \"$tmpdir/missing.conf\" \"beta\" || true)\nassert_eq \"missing key returns empty\" \"\" \"$result\"\n\n# --- Test: empty value ---\ncat > \"$tmpdir/empty_val.conf\" <<'EOF'\nempty=\nEOF\n\nresult=$(get_config \"$tmpdir/empty_val.conf\" \"empty\")\nassert_eq \"empty value\" \"\" \"$result\"\n\n# --- Test: value with spaces ---\ncat > \"$tmpdir/spaces.conf\" <<'EOF'\ngreeting=hello world\nEOF\n\nresult=$(get_config \"$tmpdir/spaces.conf\" \"greeting\")\nassert_eq \"value with spaces\" \"hello world\" \"$result\"\n\n# --- Test: key is a substring of another key ---\ncat > \"$tmpdir/substring.conf\" <<'EOF'\napp=first\napp_name=second\nEOF\n\nresult=$(get_config \"$tmpdir/substring.conf\" \"app\")\nassert_eq \"key substring does not match longer key\" \"first\" \"$result\"\n\n# --- Test: duplicate keys returns both values (last wins with tail, but function returns all) ---\ncat > \"$tmpdir/duplicate.conf\" <<'EOF'\nkey=value1\nkey=value2\nEOF\n\nresult=$(get_config \"$tmpdir/duplicate.conf\" \"key\")\n# grep returns all matching lines; the function returns both on separate lines\nexpected=$(printf 'value1\\nvalue2')\nassert_eq \"duplicate keys returns all matches\" \"$expected\" \"$result\"\n\n# --- Test: key not at start of line is ignored ---\ncat > \"$tmpdir/notstart.conf\" <<'EOF'\n  indented=bad\nindented=good\nEOF\n\nresult=$(get_config \"$tmpdir/notstart.conf\" \"indented\")\nassert_eq \"ignores keys not at start of line\" \"good\" \"$result\"\n\n# --- Test: value with special characters ---\ncat > \"$tmpdir/special.conf\" <<'EOF'\nurl=https://example.com/path?q=1&r=2#anchor\nEOF\n\nresult=$(get_config \"$tmpdir/special.conf\" \"url\")\nassert_eq \"value with special characters\" \"https://example.com/path?q=1&r=2#anchor\" \"$result\"\n\n# --- Test: empty file ---\n: > \"$tmpdir/empty.conf\"\n\nresult=$(get_config \"$tmpdir/empty.conf\" \"anything\" || true)\nassert_eq \"empty file returns empty\" \"\" \"$result\"\n\n# --- Test: single entry file ---\ncat > \"$tmpdir/single.conf\" <<'EOF'\nonly=entry\nEOF\n\nresult=$(get_config \"$tmpdir/single.conf\" \"only\")\nassert_eq \"single entry file\" \"entry\" \"$result\"\n\n# --- Summary ---\nprintf '\\n%d tests run, %d failures\\n' \"$tests_run\" \"$failures\"\n\nif [[ $failures -ne 0 ]]; then\n  exit 1\nfi\n\nexit 0\n"}}
+</tool_use>
+
+<tool_use>
+{"id":"tooluse_j3fmxmjzR6eXOgKK4Sxxgg","type":"tool_use","name":"Bash","input":{"command":"cd '/Users/mark/dev/repos/mine/ITS JUST/assertions/eval' && shellcheck test_get_config.sh","description":"Run shellcheck to lint the bash script for common issues"}}
+</tool_use>
+
+<tool_result>
+{"toolName":"Write","result":"","resultForAssistant":"Successfully wrote to file /Users/mark/dev/repos/mine/ITS JUST/assertions/eval/test_get_config.sh"}
+</tool_result>
+
+<tool_result>
+{"toolName":"Bash","result":"","resultForAssistant":""}
+</tool_result>
+
+<tool_use>
+{"id":"tooluse_mSdGMi6TQS6tPrnnuLzuxQ","type":"tool_use","name":"Bash","input":{"command":"cd '/Users/mark/dev/repos/mine/ITS JUST/assertions/eval' && bash test_get_config.sh","description":"Run the test script to verify all tests pass"}}
+</tool_use>
+
+<tool_result>
+{"toolName":"Bash","result":"PASS: simple key retrieval (host)\nPASS: simple key retrieval (port)\nPASS: simple key retrieval (name)\nPASS: value with equals signs\nPASS: missing key returns empty\nPASS: empty value\nPASS: value with spaces\nPASS: key substring does not match longer key\nPASS: duplicate keys returns all matches\nPASS: ignores keys not at start of line\nPASS: value with special characters\nPASS: empty file returns empty\nPASS: single entry file\n\n13 tests run, 0 failures","resultForAssistant":"PASS: simple key retrieval (host)\nPASS: simple key retrieval (port)\nPASS: simple key retrieval (name)\nPASS: value with equals signs\nPASS: missing key returns empty\nPASS: empty value\nPASS: value with spaces\nPASS: key substring does not match longer key\nPASS: duplicate keys returns all matches\nPASS: ignores keys not at start of line\nPASS: value with special characters\nPASS: empty file returns empty\nPASS: single entry file\n\n13 tests run, 0 failures"}
+</tool_result>
+
+All 13 tests pass, shellcheck is clean. The test script covers:
+
+- Simple key-value retrieval (multiple keys)
+- Values containing equals signs
+- Missing key (returns empty)
+- Empty value
+- Values with spaces
+- Key substring not matching longer keys (e.g., `app` vs `app_name`)
+- Duplicate keys
+- Keys not at start of line (indented) are ignored
+- Special characters in values (URLs with `?`, `&`, `#`)
+- Empty file
+- Single entry file
+
+The tests maximize **purity** — they only touch the filesystem (temp files cleaned up on exit) with no network, timing, threads, or process dependencies. **Extent** is natural — each test exercises the full `get_config` function through its public interface.

@@ -1,0 +1,7 @@
+{
+  "id": "c05",
+  "name": "Asking produces better outcomes than waiting",
+  "deps": ["c01", "c02", "c03"],
+  "layer": 3,
+  "note": "The article's main claim. c01 provides the mathematical force, c02 maps it to reality, c03 provides independent empirical support. c02 is the weak link."
+}

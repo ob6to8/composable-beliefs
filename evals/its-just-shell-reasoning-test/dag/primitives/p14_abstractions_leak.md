@@ -1,0 +1,1 @@
+All non-trivial abstractions, to some degree, are leaky (Spolsky, 2002). Abstractions save time working but don't save time learning. When agent frameworks leak, debugging falls back to the Unix layer they abstracted over.

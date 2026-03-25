@@ -1,0 +1,1 @@
+Text streams are the unit of communication. Pipes compose agents. Every coordination protocol eventually reduces to: can you emit text?

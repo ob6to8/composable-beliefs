@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+get_config() {
+  local file="$1" key="$2"
+  grep "^${key}=" "$file" | cut -d'=' -f2-
+}
+
+extract_value() {
+  local input="$1" key="$2"
+  printf '%s\n' "$input" | grep "^${key}=" | cut -d'=' -f2-
+}
+
+failures=0
+tests=0
+
+assert_eq() {
+  local description="$1" expected="$2" actual="$3"
+  tests=$((tests + 1))
+  if [ "$expected" = "$actual" ]; then
+    printf 'PASS [pure]: %s\n' "$description"
+  else
+    printf 'FAIL [pure]: %s (expected "%s", got "%s")\n' "$description" "$expected" "$actual"
+    failures=$((failures + 1))
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Pure tests: exercise the parsing logic via extract_value (no filesystem)
+# These test the same grep|cut pipeline without touching disk.
+# ---------------------------------------------------------------------------
+
+assert_eq "simple key-value" "bar" "$(extract_value "foo=bar" "foo")"
+
+assert_eq "value with equals sign" "a=b=c" "$(extract_value "key=a=b=c" "key")"
+
+assert_eq "empty value" "" "$(extract_value "key=" "key")"
+
+assert_eq "missing key returns empty" "" "$(extract_value "other=1" "key")"
+
+assert_eq "multiple lines correct key" "second" "$(extract_value $'first=1\ntarget=second\nlast=3' "target")"
+
+assert_eq "key that is prefix of another" "right" "$(extract_value $'foobar=wrong\nfoo=right' "foo")"
+
+assert_eq "value with spaces" "hello world" "$(extract_value "greeting=hello world" "greeting")"
+
+assert_eq "value with special chars" "/usr/local/bin:/usr/bin" "$(extract_value "PATH=/usr/local/bin:/usr/bin" "PATH")"
+
+assert_eq "duplicate keys returns both lines" $'v1\nv2' "$(extract_value $'k=v1\nk=v2' "k")"
+
+assert_eq "line not starting with key ignored" "real" "$(extract_value $'# key=comment\nkey=real' "key")"
+
+assert_eq "blank lines in input" "val" "$(extract_value $'\n\nkey=val\n\n' "key")"
+
+assert_eq "numeric key and value" "42" "$(extract_value "99=42" "99")"
+
+assert_eq "key with underscore" "yes" "$(extract_value "my_key=yes" "my_key")"
+
+assert_eq "value is only whitespace" "   " "$(extract_value "key=   " "key")"
+
+# ---------------------------------------------------------------------------
+# Filesystem tests: verify get_config works end-to-end with a real temp file.
+# Classified separately because they depend on filesystem IO.
+# ---------------------------------------------------------------------------
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+config_file="$tmpdir/test.conf"
+cat > "$config_file" <<'EOF'
+host=localhost
+port=8080
+path=/var/data
+empty=
+multi_eq=a=b=c
+# comment=ignored
+spaced=hello world
+EOF
+
+assert_fs() {
+  local description="$1" expected="$2" actual="$3"
+  tests=$((tests + 1))
+  if [ "$expected" = "$actual" ]; then
+    printf 'PASS [filesystem]: %s\n' "$description"
+  else
+    printf 'FAIL [filesystem]: %s (expected "%s", got "%s")\n' "$description" "$expected" "$actual"
+    failures=$((failures + 1))
+  fi
+}
+
+assert_fs "read host" "localhost" "$(get_config "$config_file" "host")"
+assert_fs "read port" "8080" "$(get_config "$config_file" "port")"
+assert_fs "read path with slashes" "/var/data" "$(get_config "$config_file" "path")"
+assert_fs "read empty value from file" "" "$(get_config "$config_file" "empty")"
+assert_fs "read value with equals" "a=b=c" "$(get_config "$config_file" "multi_eq")"
+assert_fs "missing key from file" "" "$(get_config "$config_file" "nonexistent")"
+assert_fs "read spaced value from file" "hello world" "$(get_config "$config_file" "spaced")"
+assert_fs "comment line not matched" "" "$(get_config "$config_file" "# comment")"
+
+printf '\n%d tests run, %d passed, %d failed\n' "$tests" "$((tests - failures))" "$failures"
+exit "$failures"

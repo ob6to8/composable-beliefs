@@ -1,0 +1,1 @@
+Trust requirements decrease as you move from natural language to structured APIs to shell semantics. Natural language requires trust in interpretation. Shell semantics require only trust in inspection. The inspection chain terminates at shell output but never terminates at natural language.

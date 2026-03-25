@@ -1,0 +1,1 @@
+Composition of focused, tested primitives beats monolithic frameworks. Simple tools composed via pipes and scripts outperform integrated systems for the core problem of agent coordination.

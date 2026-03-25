@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+FAILURES=0
+TESTS=0
+
+assert_eq() {
+  local description="$1" expected="$2" actual="$3"
+  TESTS=$((TESTS + 1))
+  if [[ "$expected" == "$actual" ]]; then
+    printf "PASS: %s\n" "$description"
+  else
+    printf "FAIL: %s\n  expected: '%s'\n  actual:   '%s'\n" "$description" "$expected" "$actual"
+    FAILURES=$((FAILURES + 1))
+  fi
+}
+
+# --- Function under test ---
+get_config() {
+  local file="$1" key="$2"
+  grep "^${key}=" "$file" | cut -d'=' -f2-
+}
+
+# =============================================================
+# PURE TESTS — test the parsing logic via stdin/heredoc strings
+# No filesystem dependency. These run first and fastest.
+# =============================================================
+
+get_config_pure() {
+  local key="$1"
+  grep "^${key}=" | cut -d'=' -f2-
+}
+
+printf "=== Pure tests (no IO) ===\n"
+
+result=$(printf "name=alice\nage=30\n" | get_config_pure "name")
+assert_eq "pure: simple key lookup" "alice" "$result"
+
+result=$(printf "name=alice\nage=30\n" | get_config_pure "age")
+assert_eq "pure: second key lookup" "30" "$result"
+
+result=$(printf "name=alice\nage=30\n" | get_config_pure "missing")
+assert_eq "pure: missing key returns empty" "" "$result"
+
+result=$(printf "db_host=localhost\ndb_port=5432\n" | get_config_pure "db_host")
+assert_eq "pure: key with underscore" "localhost" "$result"
+
+result=$(printf "path=/usr/local/bin\n" | get_config_pure "path")
+assert_eq "pure: value with slashes" "/usr/local/bin" "$result"
+
+result=$(printf "greeting=hello=world\n" | get_config_pure "greeting")
+assert_eq "pure: value containing equals sign" "hello=world" "$result"
+
+result=$(printf "empty=\n" | get_config_pure "empty")
+assert_eq "pure: empty value" "" "$result"
+
+result=$(printf "url=https://example.com?foo=bar&baz=qux\n" | get_config_pure "url")
+assert_eq "pure: complex value with special chars" "https://example.com?foo=bar&baz=qux" "$result"
+
+result=$(printf "key=value\nkey=other\n" | get_config_pure "key")
+assert_eq "pure: duplicate keys returns both lines" "value
+other" "$result"
+
+result=$(printf "prefix_key=wrong\nkey=right\n" | get_config_pure "key")
+assert_eq "pure: key is not a substring match of longer key" "right" "$result"
+
+result=$(printf "  key=value\n" | get_config_pure "key")
+assert_eq "pure: line with leading space does not match" "" "$result"
+
+result=$(printf "key=value with spaces\n" | get_config_pure "key")
+assert_eq "pure: value with spaces" "value with spaces" "$result"
+
+result=$(printf "" | get_config_pure "anything")
+assert_eq "pure: empty input" "" "$result"
+
+result=$(printf "no_equals_here\nkey=found\n" | get_config_pure "key")
+assert_eq "pure: lines without equals are skipped" "found" "$result"
+
+result=$(printf "KEY=upper\nkey=lower\n" | get_config_pure "key")
+assert_eq "pure: case sensitive lookup" "lower" "$result"
+
+result=$(printf "KEY=upper\nkey=lower\n" | get_config_pure "KEY")
+assert_eq "pure: case sensitive lookup uppercase" "upper" "$result"
+
+# =============================================================
+# FILESYSTEM TESTS — exercise the actual get_config function
+# which reads from a real file. These are grouped separately
+# and clearly marked as requiring filesystem IO.
+# =============================================================
+
+printf "\n=== Filesystem tests (requires tmpfile IO) ===\n"
+
+TMPFILE=$(mktemp)
+trap 'rm -f "$TMPFILE"' EXIT
+
+cat > "$TMPFILE" <<'EOF'
+host=localhost
+port=8080
+name=my app
+debug=true
+connection=postgres://user:pass@host:5432/db
+multi_eq=a=b=c
+EOF
+
+result=$(get_config "$TMPFILE" "host")
+assert_eq "file: lookup host" "localhost" "$result"
+
+result=$(get_config "$TMPFILE" "port")
+assert_eq "file: lookup port" "8080" "$result"
+
+result=$(get_config "$TMPFILE" "name")
+assert_eq "file: value with space" "my app" "$result"
+
+result=$(get_config "$TMPFILE" "debug")
+assert_eq "file: lookup debug" "true" "$result"
+
+result=$(get_config "$TMPFILE" "connection")
+assert_eq "file: complex value" "postgres://user:pass@host:5432/db" "$result"
+
+result=$(get_config "$TMPFILE" "multi_eq")
+assert_eq "file: value with multiple equals" "a=b=c" "$result"
+
+result=$(get_config "$TMPFILE" "nonexistent")
+assert_eq "file: missing key" "" "$result"
+
+result=$(get_config "$TMPFILE" "hos")
+assert_eq "file: partial key does not match" "" "$result"
+
+# =============================================================
+# Summary
+# =============================================================
+
+printf "\n=== Results: %d tests, %d failures ===\n" "$TESTS" "$FAILURES"
+
+if [[ "$FAILURES" -gt 0 ]]; then
+  exit 1
+fi
+
+exit 0

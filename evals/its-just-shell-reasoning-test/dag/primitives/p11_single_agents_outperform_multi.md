@@ -1,0 +1,1 @@
+Multi-agent coordination often degrades performance. Mean improvement: -3.5%. In planning tasks: -39% to -70%. Coordination overhead dominates. Single agents with tools outperform multi-agent orchestration in most studied cases (Kim et al., 2025).

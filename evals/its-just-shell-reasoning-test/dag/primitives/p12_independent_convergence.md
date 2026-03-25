@@ -1,0 +1,1 @@
+Between December 2024 and February 2026, Anthropic, Vercel, Fly.io, Ptacek, Willison, and Shankar independently arrived at the same conclusions: filesystem as context substrate, bash as tool interface, simplicity over frameworks. None cited each other.

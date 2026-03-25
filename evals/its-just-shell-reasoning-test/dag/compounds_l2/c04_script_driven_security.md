@@ -1,0 +1,1 @@
+Script-driven mode structurally reduces the inter-agent trust exploitation attack surface. Even if the LLM is fully compromised, the worst it can do is return bad text. The script parses that text as data, not as instructions to execute. The workflow continues along its human-authored path with corrupted judgment, not hijacked control flow.

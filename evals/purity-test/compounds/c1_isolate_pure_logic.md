@@ -1,0 +1,1 @@
+When a function mixes pure logic with IO, separate your tests: test the pure logic without IO wherever possible, and only use IO for what strictly requires it. This produces faster, more stable tests without artificially constraining what the tests cover.

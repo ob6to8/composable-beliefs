@@ -1,0 +1,1 @@
+LLMs that successfully refuse malicious commands from humans will execute those same commands when requested by peer agents. 82% of LLMs fell to inter-agent trust exploitation (Lupinacci et al., 2025). The LLM treats peer-agent input as inherently trustworthy.

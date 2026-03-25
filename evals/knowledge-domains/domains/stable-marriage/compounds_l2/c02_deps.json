@@ -1,0 +1,7 @@
+{
+  "id": "c02",
+  "name": "The bridge: proposing maps to asking",
+  "deps": ["p05", "p06", "p07"],
+  "layer": 2,
+  "note": "CRITICAL: This is the weakest compound. All three deps are contestable bridge primitives. Every life-advice claim depends on this bridge holding."
+}

@@ -1,0 +1,1 @@
+Files are the unit of state. Context, memory, learnings, coordination, and beliefs can all be represented as files. The filesystem is nearly unlimited compared to the context window.

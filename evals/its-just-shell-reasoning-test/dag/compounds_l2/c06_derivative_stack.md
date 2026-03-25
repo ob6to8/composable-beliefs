@@ -1,0 +1,1 @@
+Climbing the derivative stack (from doing tasks to automating to optimizing to meta-optimizing) requires that each layer be an inspectable, composable artifact. Script-driven agents are artifacts at every order. LLM-driven agents resist composition into higher-order systems because the workflow isn't an artifact — it's emergent.

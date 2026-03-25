@@ -1,0 +1,1 @@
+Organize and label tests by their purity level (pure, uses filesystem, uses network) rather than by traditional categories (unit, integration). Group tests so pure tests run first and impure tests are clearly marked with their environmental dependencies.

@@ -1,0 +1,1 @@
+Pure tests are more stable. They are resilient to unrelated changes and have lower flakiness rates.

@@ -1,0 +1,1 @@
+Test speed correlates categorically with purity. Each level of impurity adds roughly half an order of magnitude to runtime.
